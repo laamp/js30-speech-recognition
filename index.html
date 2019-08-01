@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon"
+    href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/214/microphone_1f3a4.png">
+  <title>Speech Detection</title>
+</head>
+
+<body>
+
+  <h1>'Reset' -- Clears the text</h1>
+  <h1>Try saying a color!</h1>
+
+  <div class="words" contenteditable>
+  </div>
+
+  <script>
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const webpage = document.querySelector('body');
+
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+
+    let p = document.createElement('p');
+    const words = document.querySelector('.words');
+    words.appendChild(p);
+
+    recognition.addEventListener('result', e => {
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+
+      p.textContent = transcript;
+      if (e.results[0].isFinal) {
+        p = document.createElement('p');
+        words.appendChild(p);
+      }
+      if (transcript.includes('reset')) {
+        while (words.firstChild) {
+          words.removeChild(words.firstChild);
+        }
+        webpage.style.backgroundColor = '#3d2b55';
+      }
+      if (transcript.toLowerCase().includes('red')) {
+        webpage.style.backgroundColor = 'red';
+      }
+      if (transcript.toLowerCase().includes('orange')) {
+        webpage.style.backgroundColor = 'orange';
+      }
+      if (transcript.toLowerCase().includes('yellow')) {
+        webpage.style.backgroundColor = 'yellow';
+      }
+      if (transcript.toLowerCase().includes('green')) {
+        webpage.style.backgroundColor = 'green';
+      }
+      if (transcript.toLowerCase().includes('blue')) {
+        webpage.style.backgroundColor = 'blue';
+      }
+      if (transcript.toLowerCase().includes('purple')) {
+        webpage.style.backgroundColor = 'purple';
+      }
+      if (transcript.toLowerCase().includes('white')) {
+        webpage.style.backgroundColor = 'white';
+      }
+      if (transcript.toLowerCase().includes('black')) {
+        webpage.style.backgroundColor = 'black';
+      }
+      if (transcript.toLowerCase().includes('gray')) {
+        webpage.style.backgroundColor = 'gray';
+      }
+      if (transcript.toLowerCase().includes('pink')) {
+        webpage.style.backgroundColor = 'pink';
+      }
+    });
+
+    recognition.start();
+    recognition.addEventListener('end', recognition.start);
+
+  </script>
+
+  <style>
+    html {
+      font-size: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: lightblue;
+    }
+
+    body {
+      background: #3d2b55;
+      font-family: 'helvetica neue';
+      font-weight: 200;
+      font-size: 20px;
+      transition: all 1.0s ease;
+    }
+
+    .words {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem 1rem 5rem;
+      background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+      background-size: 100% 3rem;
+      position: relative;
+      line-height: 3rem;
+    }
+
+    p {
+      margin: 0 0 3rem;
+    }
+
+    .words:before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      top: 0;
+      left: 30px;
+      bottom: 0;
+      border: 1px solid;
+      border-color: transparent #efe4e4;
+    }
+
+  </style>
+
+</body>
+
+</html>
